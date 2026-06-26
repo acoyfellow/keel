@@ -16,8 +16,11 @@ the decision.
 
 ## quick start
 
+not published to npm (the name `keel` is taken there); this is `private` and
+used by path / git. import from `src/index.ts`:
+
 ```ts
-import { buildAndSmoke, signProof, makeProof, Keyring, verifySignedProof } from "keel";
+import { buildAndSmoke, signProof, makeProof, Keyring, verifySignedProof } from "./src/index.ts";
 
 // 1. behavioral gate: actually build and smoke-run the candidate
 const ev = buildAndSmoke(candidateDir, {
