@@ -15,7 +15,7 @@ costume of achievement.
   - promote-model: forged proof, stale token, replayed promotion, concurrent
     compare-and-swap race, wrong-repo token all refused with the ref unchanged.
 - **One real signed + keyring-gated deploy** ran against a live Cloudflare service
-  (`receipts/live-gated-deploy.log`): candidate built (evidence bound), good path
+  (`receipts/live-gated-deploy.txt`): candidate built (evidence bound), good path
   admitted and promoted via force-with-lease, a REVOKED verifier key rejected with
   the production ref unchanged, authenticated health green (200 + serverInfo, unauth
   302), then canonical restored.

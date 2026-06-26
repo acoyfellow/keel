@@ -52,7 +52,7 @@ evidence lives in `receipts/`, not in this prose.
 
 - `receipts/tests.txt` — 55 passing behavioral checks (signed-proof forgery,
   keyring revocation/rotation, build+smoke rejection, negative-auth attacks).
-- `receipts/live-gated-deploy.log` — one real signed + keyring-gated deploy ran
+- `receipts/live-gated-deploy.txt` — one real signed + keyring-gated deploy ran
   against a live Cloudflare service: good path admitted and promoted, a revoked
   verifier key was rejected with the production ref unchanged, authenticated
   health (200 + serverInfo, unauth 302) green, then it restored canonical.

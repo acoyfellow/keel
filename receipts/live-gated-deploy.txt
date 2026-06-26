@@ -1,0 +1,12 @@
+candidate: 63a42339d11788cbee62d8f990d09f47f4c906b6
+evidence: build=true;smoke=true;out=tree:35ad9f969e38c266bf046611a7281e84d3407cf2
+good-path admit (active key + signed proof + smoke pass): true
+promoted main: 63a42339d11788cbee62d8f990d09f47f4c906b6
+deployed candidate
+authenticated health: false (authenticated-serverinfo=true, access-guards-unauth=false)
+good-path decision chain ok: true
+bad-path admit (revoked key): false -> no promote, no deploy
+bad-path main unchanged: true
+reset main: 24bccd671205d7acbe78e46c507973b5d15a7808
+redeployed canonical
+final site: 200, main: 24bccd671205d7acbe78e46c507973b5d15a7808
