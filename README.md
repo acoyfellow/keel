@@ -51,7 +51,7 @@ bun test        # 55 deterministic checks across the gate
 
 ## proof
 
-evidence lives in `receipts/`, not in this prose.
+the receipts hold the evidence.
 
 - `receipts/tests.txt` — 55 passing behavioral checks (signed-proof forgery,
   keyring revocation/rotation, build+smoke rejection, negative-auth attacks).
@@ -65,7 +65,7 @@ evidence lives in `receipts/`, not in this prose.
 
 ## how it works
 
-one flow, content in, decision out:
+the flow:
 
 ```text
 candidate (git/Artifacts commit = content digest)
@@ -104,7 +104,7 @@ hand-rolled "is this deploy ok / who approved it" substrate. that is projected
 until a second notebook cites the schema; the executor integration is the first
 candidate consumer.
 
-## residual gaps (honest)
+## residual gaps
 
 - the build+smoke gate runs before promotion but is not a full pre-promote live
   environment.
@@ -115,4 +115,4 @@ candidate consumer.
 - a compromised owner root, or a verifier key valid at signing time, can still
   authorize a bad artifact.
 
-MIT. version stays `0.0.1`; this is an extracted primitive, not a product.
+MIT, `0.0.1`. extracted from the executor notebook, kept small.
