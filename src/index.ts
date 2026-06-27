@@ -11,3 +11,5 @@ export type { SignedRecord } from "./signed-decision.ts";
 export { DecisionLog, verifyChain } from "./decision.ts";
 export type { DecisionRecord } from "./decision.ts";
 export * from "./minting.ts";
+export * from "./threshold.ts";
+export * from "./transparency.ts";
