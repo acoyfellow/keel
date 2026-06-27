@@ -119,13 +119,24 @@ second project imports the records and removes that substrate.
 
 ## Residual Gaps
 
-- The build and smoke gate runs before promotion, but it is not a full
-  pre-promote live environment.
-- The scoped token type models authorization; a real minting role and policy are
-  still needed.
-- The keyring and decision log are in memory; both need durable, protected
-  persistence.
-- A compromised owner root, or a verifier key valid at signing time, can still
-  authorize a bad artifact.
+The four original gaps are now closed with tests:
+
+- Pre-promote live smoke boots the built candidate and sends it a real request
+  before promotion (`live-smoke`); a candidate that builds but fails live is
+  rejected. The runner is injectable; a process-backed default ships.
+- A minting role issues a short-lived, repo-scoped write credential only against
+  a passing signed proof, and a promoter cannot mint its own (`minting`).
+- The keyring and decision chain persist through a `Store` (file-backed default,
+  KV/DO/D1 adapters fit the same interface); revocations survive reload and an
+  out-of-band edit is caught by checksum (`persistence`).
+- Threshold k-of-n verification means one compromised key cannot admit alone,
+  and an append-only transparency log makes a rewritten authorization detectable
+  (`threshold`, `transparency`).
+
+What is honestly still open: the default live runner and persistence store are
+reference implementations, not a hosted environment; binding keel to a specific
+provider's preview/runtime and durable store is the integrator's job through the
+ports. The owner root remains the ultimate authority; threshold raises the cost
+of a single compromise without removing it.
 
 MIT, version `0.0.1`. An extracted primitive, kept small.

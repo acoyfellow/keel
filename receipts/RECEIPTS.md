@@ -45,3 +45,23 @@ costume of achievement.
 
 - None yet. The executor-on-cloudflare integration is the first candidate consumer;
   this line stays empty until that import exists and deletes substrate.
+
+## Update: residual gaps closed (verified now)
+
+75 tests pass across 14 files. The four gaps from the first cut are closed with
+deterministic tests:
+
+- `live-smoke`: boots the built candidate, sends a real request pre-promote;
+  builds-but-throws, non-200, and never-listens are all rejected (no hang).
+- `minting`: write token issued only against a passing signed proof; promoter
+  self-mint rejected; a leaked token cannot promote a different candidate.
+- `persistence`: keyring + signed decision chain survive reload (revocations and
+  rotations intact, chain verifies); an out-of-band store edit fails checksum.
+- `threshold` + `transparency`: k-of-n requires k distinct trusted active keys
+  (one compromised key cannot admit); the transparency log detects edits,
+  removals, and rewrites against a pinned head.
+
+Still projected, not realized: no second project has imported the proof/decision
+records and deleted its own substrate yet. The default runner and file store are
+reference implementations; a hosted runner and a KV/DO/D1 store are integrator
+work behind the existing ports.
