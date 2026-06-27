@@ -63,4 +63,16 @@ export class Keyring {
   pem(keyId: string): string | undefined {
     return this.#keys.get(keyId)?.publicPem;
   }
+
+  /** A serializable snapshot of every key entry, including revocation state. */
+  snapshot(): KeyEntry[] {
+    return [...this.#keys.values()].map((e) => ({ ...e }));
+  }
+
+  /** Rebuild a keyring from a snapshot. Revocations and windows survive. */
+  static restore(entries: KeyEntry[]): Keyring {
+    const ring = new Keyring();
+    for (const e of entries) ring.#keys.set(e.keyId, { ...e });
+    return ring;
+  }
 }

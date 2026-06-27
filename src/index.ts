@@ -13,3 +13,4 @@ export type { DecisionRecord } from "./decision.ts";
 export * from "./minting.ts";
 export * from "./threshold.ts";
 export * from "./transparency.ts";
+export * from "./persistence.ts";
