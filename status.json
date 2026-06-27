@@ -1,0 +1,22 @@
+{
+  "state": "examples_prove_each_gate_claim",
+  "iteration": 1,
+  "northStar": "Owner-operated software on Cloudflare adopts verified self-update by importing keel, deleting its own deploy-gate substrate.",
+  "constraint": "Provider-agnostic library. No network unless a caller's port makes the call. Every claim has a runnable example and a receipt; projection never wears the costume of achievement.",
+  "falsifiable": "Each example states a claim that could be wrong and runs a harness that would fail if it were.",
+  "proven": [
+    "refuse-bad-self-update: a candidate that builds but fails a real live request is refused before promotion and rolled back to known-good (examples/refuse-bad-self-update, PASS).",
+    "stolen-token-useless: a leaked still-valid write token cannot promote a different candidate without a fresh signed proof bound to it; baseline unchanged (examples/stolen-token-useless, PASS).",
+    "one-key-cant-ship: under 2-of-3, a single stolen verifier key cannot reach quorum, and the transparency log detects an edited or removed authorization entry (examples/one-key-cant-ship, PASS).",
+    "audit-survives-restart: keyring revocations and a signed decision chain survive reload from disk, and an out-of-band store edit is detected by checksum / chain break (examples/audit-survives-restart, 7/7 PASS).",
+    "delete-the-handrolled-gate: a toy owner-operated worker deletes its hand-rolled gate by importing keel, ending 41 -> 25 owner LOC (39% fewer) while gaining signing, key windows, and compare-and-swap; two attacks the old gate accepted are now refused (examples/delete-the-handrolled-gate, PASS)."
+  ],
+  "unproven": [
+    "An out-of-tree, independent owner-operated worker deletes its own deploy-gate substrate against its real live deploy path. The leverage is realized within this repo's examples, not yet downstream."
+  ],
+  "disproven": [],
+  "openQuestions": [
+    "Does the pre-promote live smoke generalize to a real workerd/wrangler preview runner injected by a Cloudflare consumer?",
+    "What is the smallest real downstream worker that would adopt keel and delete substrate, turning the leverage claim from within-repo to observed downstream?"
+  ]
+}

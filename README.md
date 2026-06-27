@@ -78,6 +78,26 @@ The receipts hold the evidence.
   negative results (no native Artifacts import over REST, a per-push pack-size
   limit, a collapsed-tree candidate caught by integrity rather than luck).
 
+## Examples
+
+Each example works backwards from a claim that could be wrong and runs a harness
+that would fail if it were. `status.json` is the proven / unproven ledger; each
+receipt carries a two-faced adversarial review (the case for it, then the
+strongest case against it).
+
+```sh
+bun run examples/refuse-bad-self-update/run.ts     # builds-but-fails-live cannot promote
+bun run examples/stolen-token-useless/run.ts       # a leaked token is useless without a fresh proof
+bun run examples/one-key-cant-ship/run.ts          # one compromised key cannot reach quorum
+bun run examples/audit-survives-restart/run.ts     # trust + audit survive restart, tamper detected
+bun run examples/delete-the-handrolled-gate/run.ts # a worker deletes its own gate by adopting keel
+```
+
+The last one is the leverage example: a toy gate shrinks 41 to 25 owner lines
+while gaining signing, key windows, and compare-and-swap. That deletion is real
+within this repo; an out-of-tree worker doing the same against its live deploy is
+still projected, recorded honestly in `status.json`.
+
 ## How It Works
 
 The flow:
