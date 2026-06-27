@@ -17,28 +17,46 @@ keel owns the decision.
 ## Quick Start
 
 ```ts
-import { buildAndSmoke, signProof, makeProof, Keyring, verifySignedProof } from "./src/index.ts";
+import {
+  buildAndSmoke,
+  makeProof,
+  signProof,
+  verifySignedProof,
+  Keyring,
+} from "./src/index.ts";
 
-// 1. behavioral gate: actually build and smoke-run the candidate
-const ev = buildAndSmoke(candidateDir, {
+// 1. Build and smoke-run the candidate. This is the gate, not a guess.
+const gate = buildAndSmoke(candidateDir, {
   buildCmd: ["bun", "build", "src/index.ts", "--outfile", "dist/out.js", "--target", "bun"],
   outputFile: "dist/out.js",
   smokeCmd: (out) => ["bun", "smoke.ts", out],
 });
 
-// 2. bind a signed proof to the exact artifact + that evidence
-const proof = signProof(
-  makeProof({ artifactDigest: candidateSha, verifier: keyId, policy: "build-smoke@1",
-              result: ev.ok ? "pass" : "fail", evidence: `build=${ev.ok}` }),
-  keyId, privatePem,
-);
+// 2. Describe what the verifier saw, bound to this exact artifact.
+const claim = makeProof({
+  artifactDigest: candidateSha,
+  verifier: keyId,
+  policy: "build-smoke@1",
+  result: gate.ok ? "pass" : "fail",
+  evidence: `build=${gate.ok}`,
+});
 
-// 3. admit only if the proof verifies against a trusted, active key
+// 3. Sign the claim with the verifier key.
+const proof = signProof(claim, keyId, privatePem);
+
+// 4. Set up the trusted keyring.
 const ring = new Keyring();
 ring.add({ keyId, publicPem, notBefore: 0 });
-const admitted = ring.status(keyId, Date.now()).trusted
-  && verifySignedProof(proof, candidateSha, { [keyId]: publicPem }).admitted;
-// promote (compare-and-swap) only when admitted; else roll back to known-good.
+
+// 5. Admit only when the key is trusted and active, and the signature verifies.
+const keyActive = ring.status(keyId, Date.now()).trusted;
+const proofValid = verifySignedProof(proof, candidateSha, { [keyId]: publicPem }).admitted;
+
+if (keyActive && proofValid) {
+  // promote by compare-and-swap against the known baseline
+} else {
+  // roll back to the known-good revision
+}
 ```
 
 ```sh
@@ -93,13 +111,11 @@ known-good revision you supply to the controller. There is no hidden gate.
 
 ## What This Makes Possible Next
 
-keel is the extracted control plane from the executor-on-cloudflare notebook. The
-leverage claim: any owner-operated worker that can name its versions by content
-digest can adopt verified self-update without rebuilding the gate. The proof and
-decision records are portable, so a second project consuming them deletes its own
-hand-rolled "is this deploy ok / who approved it" substrate. That is projected
-until a second notebook cites the schema; the executor integration is the first
-candidate consumer.
+Any owner-operated worker that names its versions by content digest can adopt
+verified self-update without rebuilding the gate. The proof and decision records
+are portable, so a project that consumes them deletes its own hand-rolled "is
+this deploy ok" and "who approved it" code. That leverage is projected until a
+second project imports the records and removes that substrate.
 
 ## Residual Gaps
 
@@ -112,4 +128,4 @@ candidate consumer.
 - A compromised owner root, or a verifier key valid at signing time, can still
   authorize a bad artifact.
 
-MIT, version `0.0.1`. Extracted from the executor notebook, kept small.
+MIT, version `0.0.1`. An extracted primitive, kept small.
