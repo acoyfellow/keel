@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Keel">
-  <rect width="64" height="64" rx="10" fill="#0b1118" />
-  <path d="M32 10 54 32 32 54 10 32Z" fill="none" stroke="#f6821f" stroke-width="6" />
-  <path d="M32 20 44 32 32 44 20 32Z" fill="#f7b53b" opacity=".9" />
-</svg>

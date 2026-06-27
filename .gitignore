@@ -2,3 +2,7 @@ node_modules/
 *.log
 .DS_Store
 coverage/
+.svelte-kit/
+build/
+.wrangler/
+.alchemy/

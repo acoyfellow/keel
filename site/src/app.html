@@ -3,10 +3,23 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0b1118" />
-    <link rel="icon" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/icon.svg" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="/favicon.png" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Keel",
+        "description": "Keel admits a candidate only when a signed, artifact-bound proof passes, then leaves a hash-chained receipt.",
+        "codeRepository": "https://github.com/acoyfellow/keel",
+        "programmingLanguage": "TypeScript",
+        "runtimePlatform": "Bun",
+        "license": "https://github.com/acoyfellow/keel/blob/main/LICENSE"
+      }
+    </script>
     %sveltekit.head%
   </head>
   <body data-sveltekit-preload-data="hover">

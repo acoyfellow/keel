@@ -90,14 +90,3 @@ export const boundaries = [
   'Keel does not trust a passing test without an artifact-bound proof.',
   'Keel does not claim downstream adoption until another project imports it and deletes code.',
 ] as const;
-
-export const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareSourceCode',
-  name: site.name,
-  description: site.description,
-  codeRepository: site.repository,
-  programmingLanguage: 'TypeScript',
-  runtimePlatform: 'Bun',
-  license: `${site.repository}/blob/main/LICENSE`,
-} as const;

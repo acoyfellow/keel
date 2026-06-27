@@ -8,6 +8,7 @@ const config = {
   preprocess: vitePreprocess(),
   kit: {
     adapter: dev ? alchemy() : adapter(),
+    inlineStyleThreshold: 20_000,
     prerender: {
       entries: ['*'],
     },

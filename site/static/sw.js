@@ -1,8 +1,8 @@
-const CACHE_NAME = 'keel-site-0.0.1';
-const APP_SHELL = ['/', '/manifest.webmanifest', '/favicon.svg', '/icon.svg'];
+const CACHE_NAME = 'keel-static-2026-06-27';
+const STATIC_ASSETS = ['/manifest.webmanifest', '/favicon.svg', '/icon.svg', '/og.svg'];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS)));
   self.skipWaiting();
 });
 
@@ -19,13 +19,7 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-        return response;
-      })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/'))),
-  );
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin || event.request.mode === 'navigate') return;
+  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
 });

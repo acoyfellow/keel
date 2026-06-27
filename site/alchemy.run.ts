@@ -15,6 +15,12 @@ function requiredEnv(variable: string): string {
   return value;
 }
 
+function cloudflareApiToken(): string {
+  const value = process.env.CLOUDFLARE_API_TOKEN ?? process.env.CLOUDFLARE_PERSONAL_API_TOKEN;
+  if (!value) throw new ConfigError('CLOUDFLARE_API_TOKEN');
+  return value;
+}
+
 const projectName = 'keel';
 
 const project = await alchemy(projectName, {
@@ -24,7 +30,7 @@ const project = await alchemy(projectName, {
       ? new FileSystemStateStore(scope)
       : new CloudflareStateStore(scope, {
           scriptName: `${projectName}-app-state`,
-          apiToken: alchemy.secret(requiredEnv('CLOUDFLARE_API_TOKEN')),
+          apiToken: alchemy.secret(cloudflareApiToken()),
           stateToken: alchemy.secret(process.env.ALCHEMY_STATE_TOKEN ?? ''),
         }),
 });

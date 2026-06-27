@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { boundaries, examples, mechanics, quickStart, site, structuredData } from '$lib/site';
+  import { boundaries, examples, mechanics, quickStart, site } from '$lib/site';
 </script>
 
 <svelte:head>
@@ -10,18 +10,17 @@
   <meta property="og:title" content={site.title} />
   <meta property="og:description" content={site.description} />
   <meta property="og:url" content={site.url} />
-  <meta property="og:image" content={`${site.url}/og.svg`} />
+  <meta property="og:image" content={`${site.url}/og.png`} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={site.title} />
   <meta name="twitter:description" content={site.description} />
-  <meta name="twitter:image" content={`${site.url}/og.svg`} />
-  <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+  <meta name="twitter:image" content={`${site.url}/og.png`} />
 </svelte:head>
 
 <main class="shell">
   <nav class="topbar" aria-label="Primary">
     <a class="brand" href="/" aria-label="Keel home">
-      <span class="brand-mark" aria-hidden="true"></span>
+      <img class="brand-mark" src="/keel-mark.png" alt="" width="22" height="22" aria-hidden="true" />
       <span>keel</span>
     </a>
     <div class="nav-links">
@@ -73,7 +72,7 @@
 
   <section id="quick-start" class="section split">
     <div>
-      <p class="eyebrow">Seven-minute path</p>
+      <p class="eyebrow">Quick start</p>
       <h2>Run the smallest useful check.</h2>
       <p>
         The quick path exercises the real library and the deletion example. It does not call a
@@ -211,12 +210,10 @@
   }
 
   .brand-mark {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--color-orange);
-    border-top-color: var(--color-amber);
+    width: 22px;
+    height: 22px;
     border-radius: var(--radius-sm);
-    transform: rotate(45deg);
+    display: block;
   }
 
   .nav-links a {
@@ -489,7 +486,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-faint);
+    color: var(--color-muted);
   }
 
   .card-label a {
