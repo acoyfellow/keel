@@ -1,0 +1,44 @@
+import alchemy from 'alchemy';
+import { SvelteKit } from 'alchemy/cloudflare';
+import { CloudflareStateStore, FileSystemStateStore } from 'alchemy/state';
+
+class ConfigError extends Error {
+  constructor(variable: string) {
+    super(`${variable} is required`);
+    this.name = 'ConfigError';
+  }
+}
+
+function requiredEnv(variable: string): string {
+  const value = process.env[variable];
+  if (!value) throw new ConfigError(variable);
+  return value;
+}
+
+const projectName = 'keel';
+
+const project = await alchemy(projectName, {
+  password: requiredEnv('ALCHEMY_PASSWORD'),
+  stateStore: (scope) =>
+    scope.local
+      ? new FileSystemStateStore(scope)
+      : new CloudflareStateStore(scope, {
+          scriptName: `${projectName}-app-state`,
+          apiToken: alchemy.secret(requiredEnv('CLOUDFLARE_API_TOKEN')),
+          stateToken: alchemy.secret(process.env.ALCHEMY_STATE_TOKEN ?? ''),
+        }),
+});
+
+const isProduction = !project.stage || project.stage === 'production';
+const resourcePrefix = isProduction ? projectName : `${projectName}-${project.stage}`;
+
+export const SITE = await SvelteKit(`${resourcePrefix}-site`, {
+  name: `${resourcePrefix}-site`,
+  ...(isProduction ? { domains: ['keel.coey.dev'] } : {}),
+  adopt: true,
+  url: true,
+});
+
+console.log({ url: SITE.url });
+
+await project.finalize();

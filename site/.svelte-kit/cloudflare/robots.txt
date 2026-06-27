@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://keel.coey.dev/sitemap.xml

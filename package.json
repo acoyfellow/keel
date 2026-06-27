@@ -4,9 +4,18 @@
   "private": true,
   "type": "module",
   "exports": "./src/index.ts",
+  "workspaces": [
+    "site"
+  ],
   "scripts": {
-    "test": "bun test ./src/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "test": "bun test ./src/*.test.ts && bun run --cwd site test",
+    "typecheck": "tsc --noEmit",
+    "site:dev": "bun run --cwd site dev",
+    "site:build": "bun run --cwd site build",
+    "site:preview": "bun run --cwd site preview",
+    "site:check": "bun run --cwd site check",
+    "check": "bun run typecheck && bun run site:check && bun run test",
+    "deploy": "bun run --cwd site deploy"
   },
   "devDependencies": {
     "@types/bun": "latest",

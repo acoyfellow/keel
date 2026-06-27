@@ -1,18 +1,51 @@
 # keel
 
-A self-updating worker promotes a bad version of itself, the live service
-breaks, and the rollback target is whatever you can remember at 2am.
+keel is a provider-agnostic control plane for verified self-update of
+owner-operated software. A candidate version is identified by content, such as a
+git or Artifacts commit. keel decides whether that candidate may replace the
+running one; it does not deploy, contact any provider, or hold credentials.
 
-## Promise
+The caller supplies deployment, verification, storage, and credential plumbing as
+injected ports. keel runs no network call unless one of those ports makes it.
+Trust rests on three things the owner controls: the promotion credential, the
+trusted verifier keyring, and the known-good revision supplied before any change.
 
-keel admits a new version only when a signed, artifact-bound proof says it is
-good, promotes by compare-and-swap against the known baseline, and rolls back to
-an explicit known-good revision when it is not. The audit trail is hash-chained
-and signed, so it survives the incident.
+## What It Does
 
-It is a control plane for owner-operated software on Cloudflare, and it knows
-nothing about any particular app. You supply the deploy, verify, and storage;
-keel owns the decision.
+- **Behavioral gate** — builds the candidate and runs it under a real request
+  before promotion. A candidate that builds but fails a live request is refused.
+- **Signed proof** — an Ed25519, artifact-bound record states what the verifier
+  observed. A proof is admitted only for the exact content digest it names.
+- **Keyring** — verifier keys carry validity windows, rotation, and revocation. A
+  valid signature from a revoked or rotated-out key is refused.
+- **Threshold** — k-of-n distinct trusted keys must sign. One compromised key
+  cannot admit alone.
+- **Minting** — a short-lived, repo-scoped write credential is issued only against
+  a passing signed proof, by a role separate from the promoter.
+- **Promotion** — compare-and-swap against the known baseline. A candidate cannot
+  clobber production if the baseline moved underneath it.
+- **Decisions** — every step is hash-chained and signed, and survives a restart.
+- **Transparency log** — an append-only record where an edited or removed
+  authorization is detectable after the fact.
+
+```text
+candidate (content digest)
+        │
+        ▼
+ verifier: tree integrity + build + live smoke  ->  evidence
+        │
+        ▼
+ signed proof (artifact-bound) + keyring (active key, k-of-n)
+        │
+   ┌────┴────────┐
+   ▼             ▼
+ admitted      refused
+ promote       roll back to known-good
+ (force-with-lease vs baseline)
+        │
+        ▼
+ hash-chained signed decision log
+```
 
 ## Quick Start
 
@@ -61,102 +94,49 @@ if (keyActive && proofValid) {
 
 ```sh
 bun install
-bun test        # 55 deterministic checks across the gate
+bun test
 ```
 
-## Proof
+## Who Owns What
 
-The receipts hold the evidence.
+| Layer | Responsibility |
+|---|---|
+| **Owner** | The promotion credential, the trusted verifier keyring, and the known-good revision. The owner root remains the ultimate authority. |
+| **keel** | The decision: gate, proof check, key validity, threshold, compare-and-swap, decision log. No deployment, no network, no secrets. |
+| **Caller ports** | Deployment, verification runner, durable storage, and credential minting. Each port retains its own authority; keel only decides whether to call promote. |
 
-- `receipts/tests.txt` — 55 passing behavioral checks (signed-proof forgery,
-  keyring revocation/rotation, build+smoke rejection, negative-auth attacks).
-- `receipts/live-gated-deploy.txt` — one real signed and keyring-gated deploy ran
-  against a live Cloudflare service: good path admitted and promoted, a revoked
-  verifier key rejected with the production ref unchanged, authenticated health
-  (200 + serverInfo, unauth 302) green, then canonical restored.
-- `receipts/RECEIPTS.md` — the observed / projected / realized ledger, with the
-  negative results (no native Artifacts import over REST, a per-push pack-size
-  limit, a collapsed-tree candidate caught by integrity rather than luck).
+## Evidence
 
-## Examples
-
-Each example works backwards from a claim that could be wrong and runs a harness
-that would fail if it were. `status.json` is the proven / unproven ledger; each
-receipt carries a two-faced adversarial review (the case for it, then the
-strongest case against it).
+- `receipts/tests.txt` — 75 deterministic checks across the gate (signed-proof
+  forgery, keyring revocation and rotation, threshold quorum, build and live
+  smoke rejection, persistence reload and tamper, negative-auth attacks).
+- `examples/` — five runnable demos, each worked backwards from a claim that
+  could be wrong. `status.json` is the proven and unproven ledger; each receipt
+  carries the case for the claim and the strongest case against it.
+- `receipts/live-gated-deploy.txt` — an earlier signed and keyring-gated deploy
+  ran against a live Cloudflare service using keel's precursor modules: the good
+  path promoted and a revoked key was rejected with the production ref unchanged.
+  The recorded health probe returned a false negative by following the Access
+  302; a manual-redirect probe then confirmed 200 with serverInfo and the
+  unauthenticated path still 302. The reproducible evidence for keel itself is
+  the tests and examples in this repo.
 
 ```sh
 bun run examples/refuse-bad-self-update/run.ts     # builds-but-fails-live cannot promote
 bun run examples/stolen-token-useless/run.ts       # a leaked token is useless without a fresh proof
 bun run examples/one-key-cant-ship/run.ts          # one compromised key cannot reach quorum
-bun run examples/audit-survives-restart/run.ts     # trust + audit survive restart, tamper detected
+bun run examples/audit-survives-restart/run.ts     # trust and audit survive restart, tamper detected
 bun run examples/delete-the-handrolled-gate/run.ts # a worker deletes its own gate by adopting keel
 ```
 
-The last one is the leverage example: a toy gate shrinks 41 to 25 owner lines
-while gaining signing, key windows, and compare-and-swap. That deletion is real
-within this repo; an out-of-tree worker doing the same against its live deploy is
-still projected, recorded honestly in `status.json`.
+## Important Limits
 
-## How It Works
-
-The flow:
-
-```text
-candidate (git/Artifacts commit = content digest)
-  -> verifier: tree integrity + injected build + smoke  -> evidence
-  -> signed proof binds evidence to that exact digest
-  -> keyring: signature valid AND key active (rotation/revocation) ?
-  -> promote-model: scoped expiring token + force-with-lease vs baseline
-  -> admitted: promote ; refused: roll back to the supplied known-good
-  -> every step appended to a hash-chained, signed decision log
-```
-
-The load-bearing primitive is content addressing: a git or Artifacts commit hash
-is the artifact identity, so a proof, a promotion, and a rollback all name the
-same exact bytes. force-with-lease makes promotion a compare-and-swap, so a
-candidate cannot clobber production if the baseline moved underneath it.
-
-## What It Deliberately Does Not Do
-
-keel does not deploy, does not talk to Cloudflare, and does not hold your
-secrets. Callers inject deploy, verify, rollback, storage, and credentials. keel
-decides; the ports act. A write token alone cannot promote without a passing
-signed proof, and a valid proof cannot promote if the baseline moved.
-
-## Where You Edit Behavior
-
-The policy is the trusted keyring, the build and smoke commands, and the
-known-good revision you supply to the controller. There is no hidden gate.
-
-## What This Makes Possible Next
-
-Any owner-operated worker that names its versions by content digest can adopt
-verified self-update without rebuilding the gate. The proof and decision records
-are portable, so a project that consumes them deletes its own hand-rolled "is
-this deploy ok" and "who approved it" code. That leverage is projected until a
-second project imports the records and removes that substrate.
-
-## Residual Gaps
-
-The four original gaps are now closed with tests:
-
-- Pre-promote live smoke boots the built candidate and sends it a real request
-  before promotion (`live-smoke`); a candidate that builds but fails live is
-  rejected. The runner is injectable; a process-backed default ships.
-- A minting role issues a short-lived, repo-scoped write credential only against
-  a passing signed proof, and a promoter cannot mint its own (`minting`).
-- The keyring and decision chain persist through a `Store` (file-backed default,
-  KV/DO/D1 adapters fit the same interface); revocations survive reload and an
-  out-of-band edit is caught by checksum (`persistence`).
-- Threshold k-of-n verification means one compromised key cannot admit alone,
-  and an append-only transparency log makes a rewritten authorization detectable
-  (`threshold`, `transparency`).
-
-What is honestly still open: the default live runner and persistence store are
-reference implementations, not a hosted environment; binding keel to a specific
-provider's preview/runtime and durable store is the integrator's job through the
-ports. The owner root remains the ultimate authority; threshold raises the cost
-of a single compromise without removing it.
+| Surface | Current boundary |
+|---|---|
+| Live smoke | The default runner boots a built server and sends one request. It is a reference runner, not a hosted preview environment; binding to workerd or `wrangler dev` is the integrator's job through the port. |
+| Minting | The minting role and scoped token are enforced in the model. A production deployment must back the minting role with a real, separately held credential rather than an ambient token. |
+| Persistence | The default `Store` is file-backed with a checksum. A KV, Durable Object, or D1 adapter implements the same interface; protecting the store at rest is the integrator's responsibility. |
+| Trust root | Threshold raises the cost of a single compromise; it does not remove the owner root as ultimate authority. The keyring has no external transparency anchor by default. |
+| Leverage | The "delete your hand-rolled gate" result is real inside this repo's examples. An out-of-tree owner-operated worker doing the same against its live deploy is recorded as unproven in `status.json`. |
 
 MIT, version `0.0.1`. An extracted primitive, kept small.
