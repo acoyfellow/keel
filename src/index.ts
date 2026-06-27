@@ -10,3 +10,4 @@ export { SignedDecisionLog, verifySignedChain } from "./signed-decision.ts";
 export type { SignedRecord } from "./signed-decision.ts";
 export { DecisionLog, verifyChain } from "./decision.ts";
 export type { DecisionRecord } from "./decision.ts";
+export * from "./minting.ts";
