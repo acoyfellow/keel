@@ -124,13 +124,7 @@
 </main>
 
 <style>
-  .shell {
-    width: min(100% - 32px, 1180px);
-    margin: 0 auto;
-  }
-  .doc-hero {
-    padding: var(--space-16) 0 var(--space-12);
-  }
+  .doc-hero { padding: var(--space-16) 0 var(--space-12); }
   .doc-hero h1 {
     margin: 0;
     max-width: 680px;
@@ -138,50 +132,7 @@
     line-height: 1.08;
     letter-spacing: -0.03em;
   }
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    font-family: 'IBM Plex Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-orange);
-  }
-  .eyebrow::before { content: '['; color: var(--color-border-strong); }
-  .eyebrow::after { content: ']'; color: var(--color-border-strong); }
-  .lead {
-    max-width: 690px;
-    margin-top: var(--space-6);
-    color: var(--color-muted);
-    font-size: 1.125rem;
-    line-height: 1.65;
-  }
-  .section {
-    padding: var(--space-16) 0;
-    border-top: 1px solid var(--color-border);
-  }
-  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-8); }
   .section-heading h2 { margin: 0; font-size: 1.6rem; letter-spacing: -0.02em; }
-  .section-heading p { margin: 0; max-width: 640px; color: var(--color-muted); line-height: 1.65; }
-
-  .command-rail { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
-  .command-rail li {
-    display: grid;
-    gap: var(--space-2);
-    padding: var(--space-5);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-layer);
-  }
-  .command-rail code, .example-list code {
-    font-family: 'IBM Plex Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.9rem;
-    color: var(--color-text);
-  }
-  .command-rail span { color: var(--color-muted); font-size: 0.85rem; }
 
   .concept-list, .limit-list { display: grid; gap: 0; margin: 0; }
   .concept-list div, .limit-list div {
@@ -202,6 +153,11 @@
     padding: var(--space-5);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
+  }
+  .example-list code {
+    font-family: 'IBM Plex Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.9rem;
+    color: var(--color-text);
   }
   .example-head { display: flex; align-items: center; gap: var(--space-3); }
   .example-head h3 { margin: 0; font-size: 1.05rem; }

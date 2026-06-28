@@ -25,3 +25,17 @@ quickstart example runs; 75 keel tests still pass.
 Extract shared section/eyebrow/lead/command-rail primitives, delete the dead
 landing CSS, unify section spacing, then re-review for cramped/empty states and
 mobile. Deploy to keel.coey.dev once Kevin's list is empty.
+
+## Round 2 (cleared structural list)
+
+Fixed Kevin's round-1 items 1-3:
+- Extracted shared primitives (.shell, .eyebrow, .lead, .section, .section-heading,
+  .command-rail) into src/lib/primitives.css, imported once in +layout. One source
+  of truth; docs and landing share it.
+- Deleted dead nav/footer CSS from the landing (it moved into Topbar/Footer
+  components). Build shows no unused-selector warnings.
+- Unified section spacing on the global .section (var(--space-20)). No more
+  16-vs-20 drift between pages.
+
+Remaining before sign-off: deploy to keel.coey.dev and one final visual polish
+pass (cramped/empty states, mobile, tag legibility on white).

@@ -169,49 +169,6 @@
 </main>
 
 <style>
-  .shell {
-    width: min(100% - 32px, 1180px);
-    margin: 0 auto;
-  }
-
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    min-height: 72px;
-    font-family: 'IBM Plex Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.78rem;
-    color: var(--color-muted);
-  }
-
-  .brand,
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .brand {
-    color: var(--color-text);
-    font-weight: 700;
-  }
-
-  .brand-mark {
-    width: 22px;
-    height: 22px;
-    border-radius: var(--radius-sm);
-    display: block;
-  }
-
-  .nav-links a {
-    padding: var(--space-2);
-    border-radius: var(--radius-sm);
-  }
-
-  .nav-links a:hover {
-    color: var(--color-blue);
-  }
 
   .hero {
     display: grid;
@@ -224,32 +181,6 @@
 
   .hero-copy {
     max-width: 760px;
-  }
-
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin: 0 0 var(--space-5);
-    font-family: 'IBM Plex Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-orange);
-  }
-
-  .eyebrow::before,
-  .eyebrow::after {
-    color: var(--color-border-strong);
-  }
-
-  .eyebrow::before {
-    content: '[';
-  }
-
-  .eyebrow::after {
-    content: ']';
   }
 
   h1,
@@ -276,14 +207,6 @@
   h3 {
     font-size: 1.125rem;
     line-height: 1.35;
-  }
-
-  .lead {
-    max-width: 690px;
-    margin-top: var(--space-6);
-    color: var(--color-muted);
-    font-size: 1.125rem;
-    line-height: 1.65;
   }
 
   .hero-actions {
@@ -334,8 +257,7 @@
   .receipt-header,
   .receipt-line,
   .card-label,
-  .status-strip,
-  .footer {
+  .status-strip {
     font-family: 'IBM Plex Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 
@@ -377,11 +299,6 @@
     line-height: 1.55;
   }
 
-  .section {
-    padding: var(--space-20) 0;
-    border-top: 1px solid var(--color-border);
-  }
-
   .split {
     display: grid;
     grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1fr);
@@ -389,44 +306,9 @@
     align-items: start;
   }
 
-  .section p {
-    max-width: 640px;
-    margin-top: var(--space-4);
-    color: var(--color-muted);
-    line-height: 1.65;
-  }
-
-  .section-heading {
-    display: grid;
-    gap: var(--space-4);
-    margin-bottom: var(--space-10);
-  }
-
-  .command-rail {
-    display: grid;
-    gap: var(--space-4);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .command-rail li {
-    display: grid;
-    gap: var(--space-2);
-    padding: var(--space-5);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-layer);
-  }
-
   code {
     color: var(--color-blue);
     overflow-wrap: anywhere;
-  }
-
-  .command-rail span {
-    color: var(--color-muted);
-    font-size: 0.92rem;
   }
 
   .evidence-grid {
@@ -574,21 +456,6 @@
     line-height: 1.55;
   }
 
-  .footer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-10) 0;
-    border-top: 1px solid var(--color-border);
-    color: var(--color-faint);
-    font-size: 0.78rem;
-  }
-
-  .footer a {
-    color: var(--color-blue);
-  }
 
   @media (max-width: 900px) {
     .hero,
@@ -613,27 +480,6 @@
   }
 
   @media (max-width: 640px) {
-    .shell {
-      width: min(100% - 24px, 1180px);
-    }
-
-    .topbar {
-      align-items: flex-start;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 96px;
-    }
-
-    .nav-links {
-      width: 100%;
-      justify-content: space-between;
-      gap: var(--space-2);
-    }
-
-    .nav-links a {
-      padding-inline: 0;
-    }
-
     .hero-actions {
       align-items: stretch;
       flex-direction: column;
@@ -641,10 +487,6 @@
 
     .button {
       width: 100%;
-    }
-
-    .section {
-      padding: var(--space-16) 0;
     }
 
     .hero {
