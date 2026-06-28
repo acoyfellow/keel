@@ -209,9 +209,8 @@
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.65fr);
     gap: var(--space-10);
-    align-items: end;
-    min-height: calc(100dvh - 120px);
-    padding: var(--space-20) 0 var(--space-16);
+    align-items: center;
+    padding: var(--space-16) 0 var(--space-20);
   }
 
   .hero-copy {
