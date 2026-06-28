@@ -24,16 +24,16 @@
 
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-copy">
-      <p class="eyebrow">Artifact-bound completion gate</p>
-      <h1 id="hero-title">Software does not get to call itself done.</h1>
+      <p class="eyebrow">For software that updates itself</p>
+      <h1 id="hero-title">Check a new version before it goes live.</h1>
       <p class="lead">
-        Keel admits a new version only when a signed proof binds observed behavior to the exact
-        candidate artifact. Promotion is compare-and-swap. Refusal rolls back to known-good. The
-        trail is signed and hash-chained.
+        When your software ships a new version of itself, keel runs that version first and only
+        switches to it if it actually works. If it does not, the old version keeps running. Every
+        decision is signed and written to a log you can check later.
       </p>
       <div class="hero-actions" aria-label="Primary actions">
-        <a class="button primary" href="#quick-start">Run the proof</a>
-        <a class="button secondary" href={site.repository}>Read source</a>
+        <a class="button primary" href="/docs">Read the docs</a>
+        <a class="button secondary" href={site.repository}>View source</a>
       </div>
     </div>
 
@@ -55,16 +55,42 @@
         <code>chain verified</code>
       </div>
       <p>
-        The receipt is the product surface: what ran, what refused, what changed, and what remains
-        unproven.
+        That is a real run: it tried a new version, the check failed, so it kept the old one and
+        wrote down what happened.
       </p>
     </aside>
+  </section>
+
+  <section class="section" aria-labelledby="when-title">
+    <div class="section-heading">
+      <p class="eyebrow">When to use it</p>
+      <h2 id="when-title">Reach for keel when a deploy can break itself.</h2>
+      <p>It fits software that updates or redeploys itself, where a bad version reaching users is expensive to undo.</p>
+    </div>
+    <div class="use-grid">
+      <div>
+        <h3>Use it when</h3>
+        <ul class="boundary-list">
+          <li>your app, agent, or worker ships new versions of itself</li>
+          <li>a broken version reaching users is costly</li>
+          <li>you want a signed record of what shipped and what passed</li>
+        </ul>
+      </div>
+      <div>
+        <h3>You probably do not need it when</h3>
+        <ul class="boundary-list">
+          <li>you deploy by hand and review every change</li>
+          <li>rolling back is trivial and cheap</li>
+          <li>there is no automated promote step to guard</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <section id="quick-start" class="section split">
     <div>
       <p class="eyebrow">Quick start</p>
-      <h2>Run the smallest useful check.</h2>
+      <h2>Try it in four commands.</h2>
       <p>
         The quick path exercises the real library and the deletion example. It does not call a
         network service or ask for a secret.
@@ -82,8 +108,8 @@
 
   <section id="proof" class="section">
     <div class="section-heading">
-      <p class="eyebrow">Receipts before claims</p>
-      <h2>Five examples, each with a way to be wrong.</h2>
+      <p class="eyebrow">Examples</p>
+      <h2>What it catches, shown five ways.</h2>
       <p>
         Each example states a falsifiable claim, runs a harness, and leaves a receipt with a
         two-sided review. Projection stays separate from observed results.
@@ -108,8 +134,8 @@
 
   <section id="mechanism" class="section split">
     <div>
-      <p class="eyebrow">Mechanism</p>
-      <h2>The gate is small enough to audit.</h2>
+      <p class="eyebrow">How it works</p>
+      <h2>Five small parts, one yes-or-no.</h2>
       <p>
         The load-bearing primitive is content addressing. A proof, a promotion, and a rollback all
         name the same bytes.
@@ -127,8 +153,8 @@
 
   <section class="section status-section" aria-labelledby="status-title">
     <div>
-      <p class="eyebrow">Current ledger</p>
-      <h2 id="status-title">Verified inside this repo. Downstream adoption is still unproven.</h2>
+      <p class="eyebrow">Status</p>
+      <h2 id="status-title">What is proven, and what is not.</h2>
     </div>
     <div class="status-strip">
       <div>
@@ -151,11 +177,11 @@
 
   <section id="limits" class="section split">
     <div>
-      <p class="eyebrow">Boundary</p>
-      <h2>What Keel does not own.</h2>
+      <p class="eyebrow">Limits</p>
+      <h2>What keel does not do.</h2>
       <p>
-        The library is intentionally provider-agnostic. Callers supply the deploy, verify,
-        rollback, and storage ports.
+        keel does not deploy, run servers, or hold your keys. You wire it into the deploy you
+        already have and supply the deploy, verify, rollback, and storage steps.
       </p>
     </div>
     <ul class="boundary-list">
@@ -169,6 +195,15 @@
 </main>
 
 <style>
+  .use-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-8);
+  }
+  .use-grid h3 {
+    margin: 0 0 var(--space-4);
+    font-size: 1rem;
+  }
 
   .hero {
     display: grid;

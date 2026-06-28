@@ -37,11 +37,11 @@
 
   <header class="doc-hero">
     <p class="eyebrow">Docs</p>
-    <h1>Run the gate, then read why it refuses.</h1>
+    <h1>What keel is and how to use it.</h1>
     <p class="lead">
-      Keel is a provider-agnostic control plane for verified self-update. It decides whether a
-      candidate version may replace the running one. It does not deploy, contact a provider, or
-      hold credentials.
+      keel decides whether a new version of your software is allowed to replace the running one. You
+      import it into the deploy you already have. It does not deploy, run servers, or hold your
+      keys. You supply those steps; keel makes the yes-or-no call and records it.
     </p>
   </header>
 
@@ -61,8 +61,8 @@
   <section class="section" aria-labelledby="concepts">
     <div class="section-heading">
       <p class="eyebrow">Concepts</p>
-      <h2 id="concepts">Five parts, one decision.</h2>
-      <p>A candidate is identified by content. These parts decide whether it may replace the running version.</p>
+      <h2 id="concepts">The five parts.</h2>
+      <p>A new version is named by its content. These five parts decide whether it is allowed to replace the one running now.</p>
     </div>
     <dl class="concept-list">
       {#each concepts as c}
@@ -74,8 +74,8 @@
   <section class="section" aria-labelledby="examples">
     <div class="section-heading">
       <p class="eyebrow">Examples</p>
-      <h2 id="examples">Each one is a claim that could be wrong.</h2>
-      <p>Every example runs and leaves a receipt with the case for it and the strongest case against it.</p>
+      <h2 id="examples">What each example proves.</h2>
+      <p>Every example runs on its own and writes a short receipt: what it checked, and where it could still be wrong.</p>
     </div>
     <ul class="example-list">
       {#each examples as ex}
@@ -95,10 +95,10 @@
   <section class="section" aria-labelledby="deploy">
     <div class="section-heading">
       <p class="eyebrow">Deploy</p>
-      <h2 id="deploy">Keel is a library, not a service.</h2>
+      <h2 id="deploy">It is a library you import.</h2>
       <p>
-        Import it where your deploy already runs and supply the deploy, verify, storage, and
-        credential ports. Keel decides; the ports act. There is nothing to host.
+        Import keel where your deploy already runs and give it four steps: deploy, verify, roll
+        back, and store. keel makes the call; your steps do the work. There is nothing to host.
       </p>
     </div>
     <ol class="command-rail">
@@ -110,8 +110,8 @@
   <section class="section" aria-labelledby="limits">
     <div class="section-heading">
       <p class="eyebrow">Limits</p>
-      <h2 id="limits">What keel does not pretend to do.</h2>
-      <p>The model is honest about its edges. These are reference implementations and named gaps, not hidden assumptions.</p>
+      <h2 id="limits">What keel does not do.</h2>
+      <p>These are the known edges. The default runner and store are starting points to replace, and the gaps below are written down on purpose.</p>
     </div>
     <dl class="limit-list">
       {#each limits as l}
