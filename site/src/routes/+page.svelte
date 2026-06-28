@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Topbar from '$lib/Topbar.svelte';
+  import Footer from '$lib/Footer.svelte';
   import { boundaries, examples, mechanics, quickStart, site } from '$lib/site';
 </script>
 
@@ -18,18 +20,7 @@
 </svelte:head>
 
 <main class="shell">
-  <nav class="topbar" aria-label="Primary">
-    <a class="brand" href="/" aria-label="Keel home">
-      <img class="brand-mark" src="/keel-mark.png" alt="" width="22" height="22" aria-hidden="true" />
-      <span>keel</span>
-    </a>
-    <div class="nav-links">
-      <a href="#proof">Proof</a>
-      <a href="#mechanism">Mechanism</a>
-      <a href="#limits">Limits</a>
-      <a href={site.repository}>Source</a>
-    </div>
-  </nav>
+  <Topbar />
 
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-copy">
@@ -174,10 +165,7 @@
     </ul>
   </section>
 
-  <footer class="footer">
-    <p>MIT. Version 0.0.1. Small until the receipts demand otherwise.</p>
-    <a href={site.repository}>github.com/acoyfellow/keel</a>
-  </footer>
+  <Footer />
 </main>
 
 <style>
