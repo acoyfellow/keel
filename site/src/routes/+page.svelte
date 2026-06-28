@@ -226,14 +226,14 @@
 
   h1 {
     max-width: 850px;
-    font-size: clamp(2.75rem, 8vw, 6.75rem);
+    font-size: clamp(2rem, 4vw, 3.25rem);
     font-weight: 780;
     line-height: 0.92;
   }
 
   h2 {
     max-width: 720px;
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
     font-weight: 720;
     line-height: 1.1;
   }

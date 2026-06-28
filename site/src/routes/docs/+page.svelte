@@ -128,11 +128,11 @@
   .doc-hero h1 {
     margin: 0;
     max-width: 680px;
-    font-size: clamp(2rem, 1.4rem + 2.6vw, 3rem);
-    line-height: 1.08;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.1;
     letter-spacing: -0.03em;
   }
-  .section-heading h2 { margin: 0; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.03em; line-height: 1.1; }
+  .section-heading h2 { margin: 0; font-size: clamp(1.4rem, 2.2vw, 1.9rem); letter-spacing: -0.02em; line-height: 1.15; }
 
   .concept-list, .limit-list { display: grid; gap: 0; margin: 0; }
   .concept-list div, .limit-list div {
