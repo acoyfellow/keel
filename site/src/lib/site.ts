@@ -53,7 +53,7 @@ export const examples: readonly EvidenceExample[] = [
   },
   {
     title: 'Hand-rolled gate deleted',
-    claim: 'A toy worker deletes local deploy-gate logic by importing Keel.',
+    claim: 'A toy worker deletes local deploy-gate logic by importing keel.',
     command: 'bun run examples/delete-the-handrolled-gate/run.ts',
     receipt: 'receipts/example-delete-the-handrolled-gate.md',
     result: '41 owner lines shrink to 25 while attacks flip to refused',
@@ -85,8 +85,8 @@ export const mechanics = [
 ] as const;
 
 export const boundaries = [
-  'Keel does not deploy an app for you.',
-  'Keel does not hold long-lived write credentials.',
-  'Keel does not trust a passing test without an artifact-bound proof.',
-  'Keel does not claim downstream adoption until another project imports it and deletes code.',
+  'keel does not deploy an app for you.',
+  'keel does not hold long-lived write credentials.',
+  'keel does not trust a passing test without an artifact-bound proof.',
+  'keel does not claim downstream adoption until another project imports it and deletes code.',
 ] as const;
