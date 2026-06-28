@@ -39,3 +39,16 @@ Fixed Kevin's round-1 items 1-3:
 
 Remaining before sign-off: deploy to keel.coey.dev and one final visual polish
 pass (cramped/empty states, mobile, tag legibility on white).
+
+## Round 3 (type-scale consistency) + deploy blocker
+
+Fixed: docs section headings matched the landing scale (clamp(1.75rem,3vw,2.5rem))
+instead of a fixed 1.6rem. Pages now share the same heading rhythm.
+
+BLOCKED ON DEPLOY: keel.coey.dev cannot be deployed from here. alchemy.run.ts
+requires ALCHEMY_PASSWORD + CLOUDFLARE_API_TOKEN + ALCHEMY_STATE_TOKEN (remote
+state); none are in env and keel.coey.dev resolves to nothing. Needs the owner to
+either supply those / run `bun run deploy`, or approve switching keel/site to
+local-state + OAuth login (like executor-cloudflare). Until then the terminal
+condition (live at keel.coey.dev) cannot be met. Docs are otherwise clean in
+local dev. Holding deploy; not spinning failed deploys.

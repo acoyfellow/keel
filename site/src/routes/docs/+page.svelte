@@ -132,7 +132,7 @@
     line-height: 1.08;
     letter-spacing: -0.03em;
   }
-  .section-heading h2 { margin: 0; font-size: 1.6rem; letter-spacing: -0.02em; }
+  .section-heading h2 { margin: 0; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.03em; line-height: 1.1; }
 
   .concept-list, .limit-list { display: grid; gap: 0; margin: 0; }
   .concept-list div, .limit-list div {
