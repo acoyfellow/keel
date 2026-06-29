@@ -11,8 +11,11 @@
     "audit-survives-restart: keyring revocations and a signed decision chain survive reload from disk, and an out-of-band store edit is detected by checksum / chain break (examples/audit-survives-restart, 7/7 PASS).",
     "delete-the-handrolled-gate: a toy owner-operated worker deletes its hand-rolled gate by importing keel, ending 41 -> 25 owner LOC (39% fewer) while gaining signing, key windows, and compare-and-swap; two attacks the old gate accepted are now refused (examples/delete-the-handrolled-gate, PASS)."
   ],
+  "partiallyRealized": [
+    "new-sdlc (a separate project) imports keel's primitives (proof, signed-proof, keyring, promote, signed-decision) across gate.ts/pipeline.ts/ports and runs green consuming them. The consumption half of the leverage claim is realized: a second project depends on keel's records, not just cites the schema."
+  ],
   "unproven": [
-    "An out-of-tree, independent owner-operated worker deletes its own deploy-gate substrate against its real live deploy path. The leverage is realized within this repo's examples, not yet downstream."
+    "The full leverage bar is still open: new-sdlc is a same-workspace relative import (not out-of-tree/published), is greenfield (deleted no prior substrate), and runs simulated ports (not a real live deploy). What remains: a project that already HAS a hand-rolled gate deletes it for keel against a real live deploy path."
   ],
   "disproven": [],
   "openQuestions": [
