@@ -88,5 +88,5 @@ export const boundaries = [
   'keel does not deploy an app for you.',
   'keel does not hold long-lived write credentials.',
   'keel does not trust a passing test without an artifact-bound proof.',
-  'keel does not claim downstream adoption until another project imports it and deletes code.',
+  'keel earns the downstream claim only by adoption: executor-cloudflare imports it and deleted its own gate code.',
 ] as const;

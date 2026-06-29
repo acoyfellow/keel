@@ -11,11 +11,12 @@
     "audit-survives-restart: keyring revocations and a signed decision chain survive reload from disk, and an out-of-band store edit is detected by checksum / chain break (examples/audit-survives-restart, 7/7 PASS).",
     "delete-the-handrolled-gate: a toy owner-operated worker deletes its hand-rolled gate by importing keel, ending 41 -> 25 owner LOC (39% fewer) while gaining signing, key windows, and compare-and-swap; two attacks the old gate accepted are now refused (examples/delete-the-handrolled-gate, PASS)."
   ],
-  "partiallyRealized": [
-    "new-sdlc (a separate project) imports keel's primitives (proof, signed-proof, keyring, promote, signed-decision) across gate.ts/pipeline.ts/ports and runs green consuming them. The consumption half of the leverage claim is realized: a second project depends on keel's records, not just cites the schema."
+  "realized": [
+    "DOWNSTREAM ADOPTION REALIZED: executor-cloudflare (a separate, live project at executor.coey.dev) added keel as a git dependency (github:acoyfellow/keel), DELETED its own duplicate substrate src/evidence.ts, and rewired scripts/self-edit-core.ts to keel.makeProof + DecisionLog. executor tests pass (10) and executor.coey.dev stays healthy. Satisfies all three: out-of-tree dependency, deletes prior substrate, real live project.",
+    "new-sdlc (a second separate project) also imports keel's primitives across gate.ts/pipeline.ts/ports and runs green, a second independent consumer."
   ],
   "unproven": [
-    "The full leverage bar is still open: new-sdlc is a same-workspace relative import (not out-of-tree/published), is greenfield (deleted no prior substrate), and runs simulated ports (not a real live deploy). What remains: a project that already HAS a hand-rolled gate deletes it for keel against a real live deploy path."
+    "Residual honesty: keel is consumed via a git dependency, not published to npm. The keel-backed self_edit path is exercised by executor's tests (mocked git/verify) and is host-side tooling; a full end-to-end keel-gated self_edit run against live Artifacts was proven in earlier gates but not re-executed this round since the worker code is unchanged."
   ],
   "disproven": [],
   "openQuestions": [

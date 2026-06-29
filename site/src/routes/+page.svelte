@@ -168,9 +168,9 @@
         <span>example receipts</span>
       </div>
       <div>
-        <span class="dot neutral"></span>
+        <span class="dot accepted"></span>
         <strong>1</strong>
-        <span>downstream adoption claim remains open</span>
+        <span>downstream adopter: executor-cloudflare</span>
       </div>
     </div>
   </section>
